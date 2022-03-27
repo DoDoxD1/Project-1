@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "248352743037",
+    "project_id": "sendsync-3367c",
+    "storage_bucket": "sendsync-3367c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248352743037:android:bdf47431651a3728541b14",
+        "android_client_info": {
+          "package_name": "com.example.sendsync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248352743037-6nv3gi86n7vp15l12obbhbib53g6ff77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDO3Blnenwy2pii0oFIKJfGUMkJz4s_Gg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248352743037-6nv3gi86n7vp15l12obbhbib53g6ff77.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
