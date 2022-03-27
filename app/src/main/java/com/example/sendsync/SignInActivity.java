@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +28,8 @@ public class SignInActivity extends AppCompatActivity {
     boolean showPass=false;
     TextView signUpButton;
     Button signInButton;
+    ProgressBar progressBar;
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -41,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpButton);
         signInButton = findViewById(R.id.signInButton);
         emailEditText = findViewById(R.id.emailEditText);
+        progressBar = findViewById(R.id.progressBar2);
         // ...
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -74,6 +77,11 @@ public class SignInActivity extends AppCompatActivity {
                 String email,pass;
                 email = emailEditText.getText().toString().trim();
                 pass = passEditText.getText().toString().trim();
+                if(email.isEmpty()||pass.isEmpty()){
+                    Toast.makeText(SignInActivity.this, "You can't leave empty fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                progressBar.setVisibility(View.VISIBLE);
                 singin(email,pass);
             }
         });
@@ -95,7 +103,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void singin(String email, String pass) {
-        Toast.makeText(this, "signing in...", Toast.LENGTH_SHORT).show();
+
         mAuth.signInWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -104,11 +112,13 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("aunu", "signInWithCustomToken:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            progressBar.setVisibility(View.GONE);
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("aunu", "signInWithCustomToken:failure", task.getException());
-
+                            Toast.makeText(SignInActivity.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
