@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity"
+    tools:context=".EditProfileActivity"
     android:background="@color/bg">
 
     <LinearLayout
@@ -25,7 +25,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:text="Profile"
+                android:text="Edit Profile"
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,13 +52,16 @@
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:src="@drawable/account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/nameEditText"
         android:text="Arihant Jain"
+        android:backgroundTint="@color/red"
         android:textSize="22sp"
         android:textColor="@color/darkgrey"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
@@ -66,40 +69,29 @@
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/red"
-        app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
-        app:layout_constraintStart_toStartOf="@+id/circleImageView"
-        app:layout_constraintTop_toTopOf="@+id/circleImageView" />
-
     <Button
-        android:id="@+id/signOutButton"
+        android:id="@+id/saveChangesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/buttonbg"
-        android:text="Sign Out"
+        android:text="Save Changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Profile?"
-        android:padding="10dp"
-        android:id="@+id/editProfileButton"
-        android:textColor="@color/red"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:indeterminateTint="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signOutButton" />
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.234"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
