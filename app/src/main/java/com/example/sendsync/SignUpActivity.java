@@ -118,7 +118,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void addUserToDB(String email, String pass, String name, FirebaseUser user) {
 
-        userRef.document(user.getUid()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+        User mUser = new User(email,pass);
+        mUser.setName(name);
+        mUser.setProfileUriString("None");
+        userRef.document(user.getUid()).set(mUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 progressBar.setVisibility(View.GONE);

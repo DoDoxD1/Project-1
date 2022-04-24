@@ -3,6 +3,7 @@ package com.example.sendsync;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,15 +11,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
     Button signOutButton;
-    CircleImageView backButton;
-    TextView editProfileButton;
+    CircleImageView backButton,profileImageView;
+    TextView editProfileButton,nameTextView;
     ProgressBar progressBar;
+
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,25 @@ public class ProfileActivity extends AppCompatActivity {
         signOutButton = findViewById(R.id.signOutButton);
         backButton = findViewById(R.id.backButton);
         editProfileButton = findViewById(R.id.editProfileButton);
+        nameTextView = findViewById(R.id.nameTextView);
         progressBar = findViewById(R.id.progressBar);
+        mUser = User.getUser();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        nameTextView.setText(mUser.getName());
+
+        if(mUser.getProfileUriString()=="None"){
+            Drawable myDrawable = getResources(). getDrawable(R. drawable. account);
+            profileImageView.setImageDrawable(myDrawable);
+        }
+        else if(mUser.getProfileUriString()!=null){
+//            Glide.with(this)
+//                    .load(user.getPhotoUrl()).into(profile);
+        }
+
+
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
