@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nameTextView"
-        android:text="Arihant Jain"
+        android:text="User"
         android:textSize="22sp"
         android:textColor="@color/darkgrey"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"

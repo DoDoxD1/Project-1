@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,12 +43,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-
-        nameTextView.setText(mUser.getName());
+        if(mUser!=null)
+            nameTextView.setText(mUser.getName());
+        else
+            Toast.makeText(this, "Failed to load resources!", Toast.LENGTH_SHORT).show();
 
         if(mUser.getProfileUriString()=="None"){
+
             Drawable myDrawable = getResources(). getDrawable(R. drawable. account);
             profileImageView.setImageDrawable(myDrawable);
+            progressBar.setVisibility(View.GONE);
         }
         else if(mUser.getProfileUriString()!=null){
 //            Glide.with(this)

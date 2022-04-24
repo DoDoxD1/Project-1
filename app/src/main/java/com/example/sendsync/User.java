@@ -31,8 +31,9 @@ public class User {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
+        if(mUser!=null)
         userRef = db.collection("Users").document(mUser.getUid());
-
+        if(userRef!=null)
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
