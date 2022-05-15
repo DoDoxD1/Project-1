@@ -9,7 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class User {
     private String name, email, userPass, profileUriString;
-
     static FirebaseAuth mAuth;
     static FirebaseUser mUser;
     static User user;
@@ -25,6 +24,11 @@ public class User {
         this.email = email;
         this.userPass = userPass;
     }
+
+    public void setPhotoUri(String photoUri) {
+        this.profileUriString = photoUri;
+    }
+
 
     public static void getCurrentUserFromDB(){
 
