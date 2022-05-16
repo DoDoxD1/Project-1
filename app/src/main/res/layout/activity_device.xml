@@ -86,6 +86,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:id="@+id/send_msg"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"
