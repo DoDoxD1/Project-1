@@ -2,6 +2,7 @@ package com.example.sendsync;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -14,9 +15,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,7 +39,7 @@ public class DeviceActivity extends AppCompatActivity {
     String receiverName, receiverID, senderName, senderID;
     private FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabse;
-    String senderRoom,receiverRoom;
+    String  senderRoom,receiverRoom;
 
     RecyclerView recyclerView;
 
@@ -42,6 +48,8 @@ public class DeviceActivity extends AppCompatActivity {
     SimpleDateFormat simpleDateFormat;
 
     Message message;
+    MessagesAdapter messagesAdapter;
+    ArrayList<Message> messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +67,24 @@ public class DeviceActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("hh:mm a");
 
+        messages = new ArrayList<>();
+        recyclerView = findViewById(R.id.device_recyler_view);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        messagesAdapter = new MessagesAdapter( this,messages);
+        recyclerView.setAdapter(messagesAdapter);
+
+
+
         senderID = firebaseAuth.getUid()+"Device";
         receiverID = firebaseAuth.getUid()+"Device 2";
         receiverName = "Device 2";
         senderName = "Device 1";
         senderRoom = senderID+receiverID;
         receiverRoom = receiverID+senderID;
-
+        fetchMessages();
         String title = "";
         title = getIntent().getExtras().getString("device");
 
@@ -86,6 +105,27 @@ public class DeviceActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void fetchMessages() {
+        DatabaseReference reference = firebaseDatabse.getReference().child("chats").child(senderRoom).child("messages");
+        messagesAdapter = new MessagesAdapter(DeviceActivity.this,messages);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                messages.clear();
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    Message message = dataSnapshot1.getValue(Message.class);
+                    messages.add(message);
+                }
+                messagesAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void sendMessage() {
